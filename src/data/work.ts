@@ -140,7 +140,7 @@ export const workCategories: WorkCategory[] = [
       "cover for insta day 4.png",
       "cover for insta day 5.png",
       "cover for insta day 7.png",
-      "kun ghar kati parcha? .jpg",
+      "kun-ghar-kati-parcha.jpg",
       "promo get over it insta_.png",
       "thumbnail ghar tapaiko.jpg",
       "why we are here? cover.png"
