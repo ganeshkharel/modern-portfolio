@@ -143,7 +143,7 @@ export const workCategories: WorkCategory[] = [
       "kun-ghar-kati-parcha.jpg",
       "promo get over it insta_.png",
       "thumbnail ghar tapaiko.jpg",
-      "why we are here? cover.png"
+      "why-we-are-here-cover.png"
     ]
   ),
   createCategory(
