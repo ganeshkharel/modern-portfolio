@@ -15,3 +15,6 @@ motion designs/
 public/work/motion/
 *.mp4
 *.mov
+
+._*
+.DS_Store
