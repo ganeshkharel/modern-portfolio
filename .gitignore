@@ -1,20 +1,23 @@
 node_modules
 .next
 out
-dist
-.env*.local
+.env
+.env.local
+.env.production
 .DS_Store
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
-
+.vercel
+.netlify
+# Large video files
 videos/
 public/work/videos/
 motion designs/
 public/work/motion/
 *.mp4
 *.mov
+*.m4v
+*.webm
 
+# macOS junk
 ._*
 .DS_Store
+.next/

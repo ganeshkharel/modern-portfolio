@@ -231,11 +231,12 @@ button {
   isolation: isolate;
   overflow: hidden;
   display: grid;
-  grid-template-columns: minmax(280px, 0.72fr) minmax(420px, 1.28fr);
+  grid-template-columns: minmax(280px, 0.74fr) minmax(420px, 1.26fr);
   gap: clamp(14px, 3vw, 48px);
+  width: 100%;
   min-height: 100svh;
   align-items: center;
-  padding: 118px 0 54px max(24px, calc((100vw - 1280px) / 2));
+  padding: 118px clamp(84px, 5.8vw, 112px) 54px;
   background:
     radial-gradient(circle at 75% 39%, rgba(225, 43, 63, 0.25), transparent 25rem),
     radial-gradient(circle at 91% 44%, rgba(122, 13, 23, 0.5), transparent 30rem),
@@ -262,6 +263,7 @@ button {
 }
 
 .hero-copy {
+  z-index: 4;
   transform: translateY(-74px);
 }
 
@@ -346,7 +348,7 @@ h3 {
 .hero-copy h1 {
   margin: 18px 0 18px;
   max-width: 620px;
-  font-size: clamp(4rem, 7.4vw, 8.3rem);
+  font-size: clamp(4rem, 6.6vw, 7.4rem);
   line-height: 0.84;
 }
 
@@ -461,22 +463,21 @@ h3 {
 
 .hero-visual {
   position: relative;
-  min-height: min(760px, calc(100svh - 150px));
+  min-height: clamp(560px, calc(100svh - 150px), 760px);
   display: grid;
   place-items: center;
 }
 
 .subject-stage {
   position: relative;
-  width: min(780px, 62vw);
+  width: min(100%, 780px);
   aspect-ratio: 0.88;
   overflow: visible;
 }
 
 .hero-subject-wrap {
-  width: 100vw;
   position: absolute;
-  inset: -5% -3% -2% -80%;
+  inset: -4% -20% -2% -84%;
   filter: drop-shadow(0 38px 78px rgba(0, 0, 0, 0.72));
 }
 
@@ -502,9 +503,9 @@ h3 {
 
 .hero-subject-image {
   object-fit: cover;
-  object-position: center;
+  object-position: 80% center;
+  transform: translateX(10px) scale(1.12);
 }
-
 .subject-badge {
   right: 10%;
   bottom: 12%;
@@ -586,6 +587,7 @@ h3 {
 .hero-glass-card {
   position: absolute;
   min-width: 176px;
+  max-width: min(240px, 44%);
   pointer-events: auto;
   border-color: color-mix(in srgb, var(--line) 70%, rgba(225, 43, 63, 0.38));
   background: linear-gradient(135deg, rgba(17, 17, 17, 0.52), rgba(122, 13, 23, 0.18));
@@ -642,6 +644,7 @@ h3 {
 
 .section {
   padding: 104px max(24px, calc((100vw - 1180px) / 2));
+  overflow: hidden;
 }
 
 .section-heading {
@@ -755,7 +758,7 @@ h3 {
 
 .preview-collage {
   display: grid;
-  grid-template-columns: 1fr 0.82fr;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.82fr);
   gap: 10px;
   min-width: 0;
   min-height: 190px;
@@ -776,6 +779,8 @@ h3 {
     repeating-linear-gradient(135deg, rgba(247, 242, 236, 0.08) 0 1px, transparent 1px 10px),
     var(--surface);
   color: var(--muted);
+  width: 100%;
+  max-width: 100%;
 }
 
 .preview-tile img,
@@ -1107,6 +1112,7 @@ h3 {
 
   .hero-section {
     gap: 20px;
+    padding-inline: clamp(24px, 6vw, 56px);
   }
 
   .hero-copy {
@@ -1114,12 +1120,16 @@ h3 {
   }
 
   .hero-visual {
-    min-height: 720px;
+    min-height: auto;
     left: auto;
   }
 
   .subject-stage {
-    width: min(700px, 92vw);
+    width: min(680px, 100%);
+  }
+
+  .hero-subject-wrap {
+    inset: -4% -4% -1% -30%;
   }
 
   .floating-card-stack {
@@ -1141,6 +1151,7 @@ h3 {
     position: relative;
     inset: auto !important;
     min-width: 0;
+    max-width: none;
     animation: none;
   }
 
@@ -1157,6 +1168,7 @@ h3 {
   .site-header {
     top: 10px;
     width: calc(100% - 20px);
+    height: 58px;
   }
 
   .logo-text {
@@ -1166,8 +1178,7 @@ h3 {
   .hero-section {
     gap: 28px;
     min-height: auto;
-    padding-top: 118px;
-    padding-bottom: 56px;
+    padding: 104px 20px 56px;
   }
 
   .hero-copy h1 {
@@ -1209,10 +1220,14 @@ h3 {
   }
 
   .subject-stage {
-    width: min(440px, 96vw);
+    width: min(420px, 100%);
     left: auto;
     margin: 0 auto;
     overflow: visible;
+  }
+
+  .hero-subject-wrap {
+    inset: -2% -2% 0 -18%;
   }
 
   .subject-badge {
@@ -1225,7 +1240,7 @@ h3 {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     width: 100%;
-    max-width: calc(100vw - 48px);
+    max-width: none;
     overflow: hidden;
     padding-bottom: 0;
     contain: layout paint;

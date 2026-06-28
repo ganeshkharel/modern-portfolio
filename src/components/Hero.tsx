@@ -97,6 +97,7 @@ export function Hero() {
               alt="Ganesh Kharel"
               fill
               priority
+              unoptimized
               sizes="(max-width: 768px) 92vw, 48vw"
               className="hero-subject-image"
             />
