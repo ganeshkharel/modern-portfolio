@@ -21,3 +21,13 @@ public/work/motion/
 ._*
 .DS_Store
 .next/
+
+# Large video files
+videos/
+public/work/videos/
+motion designs/
+public/work/motion/
+*.mp4
+*.mov
+*.m4v
+*.webm

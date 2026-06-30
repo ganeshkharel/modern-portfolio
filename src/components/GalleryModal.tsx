@@ -15,6 +15,14 @@ const aspectClass = {
 
 type PreviewSlot = WorkItem & { placeholder?: boolean };
 
+function videoType(src: string) {
+  return src.toLowerCase().includes(".mov") ? "video/quicktime" : "video/mp4";
+}
+
+function thumbnailFor(item: WorkItem) {
+  return item.image || item.cover || item.thumbnail || item.poster;
+}
+
 export function GalleryModal({
   category,
   onClose
@@ -56,6 +64,8 @@ export function GalleryModal({
   }, [activeIndex, category, items.length, onClose]);
 
   const activeItem = activeIndex === null ? null : items[activeIndex];
+  const activeVideoUrl = activeItem?.type === "video" ? activeItem.src : "";
+  const activeVideoType = videoType(activeVideoUrl);
 
   return (
     <AnimatePresence>
@@ -92,7 +102,11 @@ export function GalleryModal({
                       {item.type === "video" ? <Play size={24} /> : <ImageIcon size={24} />}
                     </span>
                   ) : item.type === "video" ? (
-                    <video src={item.src} poster={item.poster} preload="metadata" playsInline muted />
+                    thumbnailFor(item) ? (
+                      <img src={thumbnailFor(item)} alt={item.title} loading="lazy" />
+                    ) : (
+                      <span className="placeholder-media">{item.title}</span>
+                    )
                   ) : (
                     <img src={item.src} alt={item.title} loading="lazy" />
                   )}
@@ -101,9 +115,6 @@ export function GalleryModal({
               ))}
             </div>
 
-            <div className="gallery-note">
-              Showing real media from <strong>{category.folder}</strong>. Videos load metadata only until previewed.
-            </div>
           </motion.div>
 
           <AnimatePresence>
@@ -133,7 +144,15 @@ export function GalleryModal({
                         <span>{activeItem.title}</span>
                       </div>
                     ) : activeItem.type === "video" ? (
-                      <video src={activeItem.src} poster={activeItem.poster} controls autoPlay playsInline preload="metadata" />
+                      <video
+                        controls
+                        preload="none"
+                        playsInline
+                        poster={activeItem.cover || activeItem.image || activeItem.thumbnail}
+                        className="preview-media"
+                      >
+                        <source src={activeVideoUrl} type={activeVideoType} />
+                      </video>
                     ) : (
                       <img src={activeItem.src} alt={activeItem.title} />
                     )}

@@ -12,6 +12,10 @@ const aspectClass = {
   portrait: "aspect-[4/5]"
 };
 
+function thumbnailFor(item: WorkCategory["items"][number]) {
+  return item.image || item.cover || item.thumbnail || item.poster;
+}
+
 export function CategoryCard({
   category,
   onOpen
@@ -31,7 +35,11 @@ export function CategoryCard({
           <div key={item.id} className={cn("preview-tile", aspectClass[category.aspect])}>
             {item.type === "video" ? (
               <>
-                <video src={item.src} preload="metadata" playsInline muted />
+                {thumbnailFor(item) ? (
+                  <img src={thumbnailFor(item)} alt="" loading="lazy" />
+                ) : (
+                  <span className="placeholder-media">{item.title}</span>
+                )}
                 <span className="preview-play">
                   <Play size={16} />
                 </span>

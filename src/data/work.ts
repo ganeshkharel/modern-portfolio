@@ -7,6 +7,9 @@ export type WorkItem = {
   type: "image" | "video";
   aspect: WorkAspect;
   poster?: string;
+  cover?: string;
+  image?: string;
+  thumbnail?: string;
 };
 
 export type WorkCategory = {
@@ -22,6 +25,11 @@ export type WorkCategory = {
 
 const imageExtensions = /\.(jpg|jpeg|png|webp)$/i;
 const videoExtensions = /\.(mp4|webm|mov)$/i;
+const r2BaseUrl = "https://pub-ed73d841635947018c99d6d6e0dc7701.r2.dev";
+const r2VideoFolders: Record<string, string> = {
+  "/work/videos/": "videos",
+  "/work/motion/": "motion"
+};
 
 function titleFromFile(fileName: string) {
   return fileName
@@ -36,6 +44,22 @@ function publicWorkPath(folder: string, fileName: string) {
   return `${folder}${encodeURIComponent(fileName)}`;
 }
 
+function r2FilePath(fileName: string) {
+  return encodeURIComponent(fileName).replace(/[!'()*]/g, (character) =>
+    `%${character.charCodeAt(0).toString(16).toUpperCase()}`
+  );
+}
+
+function workPath(folder: string, fileName: string) {
+  const r2Folder = r2VideoFolders[folder];
+
+  if (r2Folder && videoExtensions.test(fileName)) {
+    return `${r2BaseUrl}/${r2Folder}/${r2FilePath(fileName)}`;
+  }
+
+  return publicWorkPath(folder, fileName);
+}
+
 function createCategory(
   category: Omit<WorkCategory, "countLabel" | "items">,
   files: string[]
@@ -45,7 +69,7 @@ function createCategory(
     .map<WorkItem>((file, index) => ({
       id: `${category.id}-${index + 1}`,
       title: titleFromFile(file),
-      src: publicWorkPath(category.folder, file),
+      src: workPath(category.folder, file),
       type: videoExtensions.test(file) ? "video" : "image",
       aspect: category.aspect
     }));
@@ -111,7 +135,19 @@ export const workCategories: WorkCategory[] = [
     aspect: "vertical",
     cta: "Open Collection"
     },
-    ["(mansi gif) Too tired to Cook Today.mp4", "fifa ad awai.mp4", "mansi gif 12th aug 2.mp4"]
+    [
+      "(mansi gif) Too tired to Cook Today.mp4",
+      "IT'S DESI TIME.mp4",
+      "KABULI CHANA.mp4",
+      "Turning reach into results..mov",
+      "coming soon amaron.mp4",
+      "fifa ad awai.mp4",
+      "indra jatra mero nep.mp4",
+      "mansi gif 12th aug 2.mp4",
+      "meet our team final 2.mp4",
+      "sg motion final.mp4",
+      "utsav shoes motion.mov"
+    ]
   ),
   createCategory(
     {
@@ -177,7 +213,18 @@ export const workCategories: WorkCategory[] = [
       aspect: "portrait",
       cta: "Open Collection"
     },
-    ["challenge design 3.png", "portfolio design 1.jpg", "poster rupak.png"]
+    [
+      "TRYOUT POSTER.jpg",
+      "challenge day 2.jpg",
+      "challenge design 3.jpg",
+      "challenge design 3.png",
+      "challenge design 4.jpg",
+      "portfolio design 1.jpg",
+      "poster rupak.png",
+      "rohan dhungel poster.jpg",
+      "supersonic sunday final flyer.png",
+      "worldcupp-1.jpg"
+    ]
   ),
   createCategory(
     {
@@ -188,7 +235,17 @@ export const workCategories: WorkCategory[] = [
       aspect: "portrait",
       cta: "Open Collection"
     },
-    ["meronep design.png", "not anymore .png"]
+    [
+      "WhatsApp Image 2025-08-13 at 13.32.08.jpeg",
+      "astera (we're hiring).png",
+      "ganesh edit 1.png",
+      "ganesh edit 2.png",
+      "individual flyer snocwave jeremy.png",
+      "meronep design.png",
+      "not anymore .png",
+      "poster for sazwal creation.png",
+      "r3 slide 3.jpg"
+    ]
   )
 ];
 
@@ -204,7 +261,7 @@ export const addYourFilesExample = {
   videoExample: {
     id: "video-01",
     title: "Launch Reel",
-    src: "/work/videos/video-01.mp4",
+    src: `${r2BaseUrl}/videos/video-01.mp4`,
     type: "video",
     aspect: "vertical",
     poster: "/work/videos/video-01-poster.jpg"
